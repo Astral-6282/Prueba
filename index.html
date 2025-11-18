@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mawi's Store</title>
+
+    <style>
+      :root {
+        --fondo: #000;
+        --rosa: #ff4ebd;
+      }
+
+      body {
+        margin: 0;
+        background: var(--fondo);
+        color: #fff;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      /* HEADER */
+      .header-wrapper {
+        margin: 20px;
+        border: 4px solid var(--rosa);
+        border-radius: 10px;
+        padding: 10px 16px;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        min-height: 100px;
+      }
+
+      /* Logo clickable */
+      .logo img {
+        height: 72px;
+        cursor: pointer;
+        border-radius: 6px;
+      }
+
+      /* Título */
+      .titulo-centro {
+        font-size: 40px;
+        font-weight: 700;
+        color: var(--rosa);
+        text-align: center;
+        flex-grow: 1;
+      }
+
+      /* MENU DESPLEGABLE */
+      .menu-container {
+        position: relative;
+        display: inline-block;
+      }
+
+      .menu-btn {
+        background: var(--rosa);
+        color: #000;
+        padding: 10px 16px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      .menu-content {
+        display: none;
+        position: absolute;
+        right: 0;
+        background: #111;
+        border: 2px solid var(--rosa);
+        border-radius: 8px;
+        min-width: 180px;
+        z-index: 10;
+      }
+
+      .menu-content a {
+        display: block;
+        padding: 12px;
+        text-decoration: none;
+        color: var(--rosa);
+        font-weight: bold;
+      }
+
+      .menu-content a:hover {
+        background: #222;
+      }
+
+      .menu-container:hover .menu-content {
+        display: block;
+      }
+
+      /* CONTENEDOR PRINCIPAL */
+      .contenedor {
+        margin: 20px;
+        border: 4px solid var(--rosa);
+        padding: 20px;
+        border-radius: 10px;
+      }
+
+      /* SLIDER */
+      .slider-container {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        margin-top: 20px;
+        padding: 0 50px;
+        box-sizing: border-box;
+      }
+
+      .slider-track {
+        display: flex;
+        transition: transform 0.4s ease;
+      }
+
+      .slide {
+        min-width: 33.33%;
+        padding: 5px;
+      }
+
+      .slide img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 3px solid var(--rosa);
+      }
+
+      /* BOTONES SLIDER */
+      .btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        background: var(--rosa);
+        color: #000;
+        border: none;
+        border-radius: 50%;
+        font-size: 24px;
+        cursor: pointer;
+        font-weight: bold;
+        z-index: 10;
+      }
+
+      .btn-left {
+        left: 10px;
+      }
+      .btn-right {
+        right: 10px;
+      }
+
+      .btn:hover {
+        background: #ff7cd2;
+      }
+
+      /* SECCION ROSA */
+      .seccion-rosa {
+        background: var(--rosa);
+        color: #000;
+        margin: 20px;
+        padding: 30px;
+        border-radius: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 30px;
+      }
+
+      .texto-rosa {
+        flex: 2;
+      }
+
+      .titulo-rosa {
+        font-size: 32px;
+        font-weight: 900;
+        line-height: 1.2;
+        margin-bottom: 15px;
+      }
+
+      .subtexto-rosa {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 1.5;
+      }
+
+      .lado-derecho {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .img-lateral {
+        width: 160px;
+        border-radius: 12px;
+      }
+
+      .btn-whatsapp {
+        background: #000;
+        color: var(--rosa);
+        padding: 12px 22px;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 10px;
+        font-size: 17px;
+      }
+
+      .btn-whatsapp:hover {
+        background: #222;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- HEADER -->
+    <div class="header-wrapper">
+      <header class="header">
+        <!-- LOGO CLICKABLE -->
+        <div class="logo" onclick="location.href='index.html'">
+          <img src="img/logo.jpg" alt="Logo Mawi" />
+        </div>
+
+        <div class="titulo-centro">Mawi's Store</div>
+
+        <!-- MENU DESPLEGABLE -->
+        <div class="menu-container">
+          <button class="menu-btn">Otros Servicios</button>
+
+          <div class="menu-content">
+            <a href="catalogo.html">Catálogo</a>
+            <a href="otro.html">Otro servicio</a>
+          </div>
+        </div>
+      </header>
+    </div>
+
+    <!-- CONTENIDO -->
+    <div class="contenedor">
+      <h2 class="titulo-slider">Bots Mawi's Shop</h2>
+
+      <div class="slider-container">
+        <button class="btn btn-left">&#8249;</button>
+
+        <div class="slider-track" id="track">
+          <div class="slide">
+            <a
+              href="https://chat.whatsapp.com/Dr3bN5JK9qwE2b8PtgJFYp?mode=hqrt3"
+              ><img src="img/BotBasico.jpg"
+            /></a>
+          </div>
+          <div class="slide">
+            <a
+              href="https://chat.whatsapp.com/Dr3bN5JK9qwE2b8PtgJFYp?mode=hqrt3"
+              ><img src="img/BotFarmfull.jpg"
+            /></a>
+          </div>
+          <div class="slide">
+            <a
+              href="https://chat.whatsapp.com/Dr3bN5JK9qwE2b8PtgJFYp?mode=hqrt3"
+              ><img src="img/botFarming.jpg"
+            /></a>
+          </div>
+          <div class="slide">
+            <a
+              href="https://chat.whatsapp.com/Dr3bN5JK9qwE2b8PtgJFYp?mode=hqrt3"
+              ><img src="img/BotRastreo.jpg"
+            /></a>
+          </div>
+          <div class="slide">
+            <a
+              href="https://chat.whatsapp.com/Dr3bN5JK9qwE2b8PtgJFYp?mode=hqrt3"
+              ><img src="img/KIlls.jpg"
+            /></a>
+          </div>
+        </div>
+
+        <button class="btn btn-right">&#8250;</button>
+      </div>
+    </div>
+
+    <script>
+      const track = document.getElementById("track");
+      const btnLeft = document.querySelector(".btn-left");
+      const btnRight = document.querySelector(".btn-right");
+
+      let index = 0;
+      const totalSlides = 5;
+      const visibleSlides = 3;
+
+      btnRight.onclick = () => {
+        if (index < totalSlides - visibleSlides) {
+          index++;
+          track.style.transform = `translateX(-${
+            index * (100 / visibleSlides)
+          }%)`;
+        }
+      };
+
+      btnLeft.onclick = () => {
+        if (index > 0) {
+          index--;
+          track.style.transform = `translateX(-${
+            index * (100 / visibleSlides)
+          }%)`;
+        }
+      };
+    </script>
+
+    <div class="seccion-rosa">
+      <div class="texto-rosa">
+        <h2 class="titulo-rosa">DESCUBRE LA MAGIA DE LOS PEQUEÑOS DETALLES</h2>
+        <p class="subtexto-rosa">Crecer en el reino nunca fue tan fácil...</p>
+      </div>
+
+      <div class="lado-derecho">
+        <img src="img/LogoLM.jpg" class="img-lateral" />
+        <a class="btn-whatsapp" href="#" target="_blank">Promociones</a>
+      </div>
+    </div>
+  </body>
+</html>

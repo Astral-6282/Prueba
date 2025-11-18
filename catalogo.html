@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Catálogo - Mawi's Store</title>
+    <style>
+      :root {
+        --rosa: #ff4ebd;
+        --fondo: #000;
+        --gris-osc: #111;
+        --text: #fff;
+      }
+      /* Base */
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--fondo);
+        color: var(--text);
+        font-family: Arial, Helvetica, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      a {
+        color: inherit;
+      }
+
+      /* HEADER estilo A */
+      .header-wrapper {
+        margin: 20px;
+        border: 4px solid var(--rosa);
+        border-radius: 10px;
+        padding: 10px 16px;
+        background: transparent;
+      }
+      .header {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 16px;
+        min-height: 90px;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .logo img {
+        height: 72px;
+        cursor: pointer;
+        display: block;
+      }
+      .titulo-centro {
+        justify-self: center;
+        text-align: center;
+        font-size: 40px;
+        color: var(--rosa);
+        font-weight: 700;
+        white-space: nowrap;
+        transform: translateX(-10%);
+      }
+
+      /* Menú */
+      .menu-container {
+        position: relative;
+      }
+      .menu-btn {
+        background: var(--rosa);
+        color: #000;
+        padding: 10px 16px;
+        border: 0;
+        border-radius: 8px;
+        font-weight: 800;
+        cursor: pointer;
+      }
+      .menu-content {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 56px;
+        background: var(--gris-osc);
+        border: 2px solid var(--rosa);
+        border-radius: 10px;
+        min-width: 200px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+        z-index: 10050;
+      }
+      .menu-content.show {
+        display: block;
+      }
+      .menu-content a {
+        display: block;
+        padding: 12px 16px;
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 700;
+      }
+      .menu-content a:hover {
+        background: #222;
+      }
+
+      /* Layout principal */
+      .wrap {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 12px;
+      }
+      .layout {
+        display: flex;
+        gap: 20px;
+        padding: 20px;
+      }
+      .catalogo {
+        flex: 1;
+      }
+
+      /* Tabs */
+      .tabs {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 18px;
+      }
+      .tab-btn {
+        background: #2b1b2b;
+        color: var(--text);
+        padding: 10px 12px;
+        border-radius: 8px;
+        border: 2px solid transparent;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .tab-btn.active {
+        background: var(--rosa);
+        color: #000;
+        border-color: #ff78cd;
+      }
+
+      /* Cards */
+      .items-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 14px;
+      }
+      .item-card {
+        background: transparent;
+        border: 4px solid var(--rosa);
+        border-radius: 12px;
+        padding: 14px;
+        text-align: center;
+      }
+      .item-card h4 {
+        margin: 6px 0;
+        font-size: 16px;
+        color: var(--text);
+      }
+      .item-card p {
+        margin: 6px 0;
+        color: var(--rosa);
+        font-weight: 800;
+      }
+      .cantidad {
+        width: 70px;
+        padding: 8px;
+        border-radius: 8px;
+        border: 0;
+        margin-top: 8px;
+        text-align: center;
+      }
+      .add-btn {
+        margin-top: 10px;
+        padding: 10px;
+        border-radius: 8px;
+        border: 0;
+        background: var(--rosa);
+        color: #000;
+        font-weight: 900;
+        cursor: pointer;
+        width: 100%;
+      }
+
+      /* Carrito */
+      aside#carrito {
+        width: 320px;
+        background: var(--gris-osc);
+        border-left: 4px solid var(--rosa);
+        padding: 16px;
+        border-radius: 8px;
+        height: 100vh;
+        position: sticky;
+        top: 12px;
+        overflow: auto;
+      }
+      #carrito h2 {
+        margin: 0 0 8px 0;
+        color: var(--rosa);
+      }
+      #lista-carrito {
+        list-style: none;
+        padding: 0;
+        margin: 8px 0 12px 0;
+      }
+      #lista-carrito li {
+        padding: 8px 0;
+        border-bottom: 1px dashed rgba(255, 78, 189, 0.12);
+      }
+      .input-full {
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+        border: 0;
+        margin-bottom: 10px;
+      }
+
+      .btn-whats {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 0;
+        background: var(--rosa);
+        color: #000;
+        font-weight: 900;
+        cursor: pointer;
+        margin-top: 6px;
+      }
+
+      @media (max-width: 900px) {
+        .layout {
+          flex-direction: column;
+        }
+        aside#carrito {
+          width: 100%;
+          height: auto;
+          position: relative;
+          border-left: none;
+          border-top: 4px solid var(--rosa);
+        }
+        .titulo-centro {
+          transform: translateX(-4%);
+          font-size: 26px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="header-wrapper">
+      <header class="header">
+        <div class="logo">
+          <a href="index.html"><img src="img/logo.jpg" alt="Logo MAWI" /></a>
+        </div>
+
+        <div class="titulo-centro">Mawi's Store</div>
+
+        <div class="menu-container">
+          <button class="menu-btn" id="menuToggle">Otros Servicios ▾</button>
+          <nav class="menu-content" id="menuContent">
+            <a href="catalogo.html">Catálogo</a>
+            <a href="otro.html">Otro Servicio</a>
+          </nav>
+        </div>
+      </header>
+    </div>
+
+    <div class="wrap">
+      <div class="layout">
+        <!-- CATALOGO -->
+        <main class="catalogo">
+          <h1 style="color: var(--rosa); margin-top: 0">
+            Catálogo y Calculadora de Gemas — MAWI'S STORE
+          </h1>
+
+          <div id="tabs" class="tabs"></div>
+          <div id="items" class="items-grid"></div>
+        </main>
+
+        <!-- CARRITO -->
+        <aside id="carrito">
+          <h2>Carrito</h2>
+
+          <div style="color: #ccc; font-size: 13px; margin-bottom: 8px">
+            (Se suman items de todas las pestañas)
+          </div>
+
+          <ul id="lista-carrito"></ul>
+
+          <p style="font-weight: 900; color: var(--rosa)">
+            Total: <span id="total-gemas">0</span> gemas
+          </p>
+
+          <label for="poder">Poder en millones (obligatorio)</label>
+          <input
+            id="poder"
+            class="input-full"
+            type="number"
+            placeholder="Ej. 527"
+            inputmode="numeric"
+          />
+
+          <label for="mensaje-extra">Mensaje adicional</label>
+          <input
+            id="mensaje-extra"
+            class="input-full"
+            type="text"
+            placeholder="Opcional"
+          />
+
+          <!-- NUEVOS 2 BOTONES -->
+          <button id="btnEnviar1" class="btn-whats">Enviar a Número 1</button>
+
+          <button id="btnEnviar2" class="btn-whats">Enviar a Número 2</button>
+        </aside>
+      </div>
+    </div>
+
+    <script>
+      /* Números de vendedores (orden = botones) */
+      const sellerNumbers = ["33768349928", "5492932445245"];
+
+      /* Items */
+      const items = [
+        { category: "Aceleradores", name: "Acelerador 3H", price: 300 },
+        { category: "Aceleradores", name: "Acelerador 15H", price: 800 },
+        { category: "Aceleradores", name: "Acelerador 24H", price: 1000 },
+
+        { category: "Combate", name: "Aumento de ataque 20%", price: 1500 },
+        { category: "Combate", name: "Aumento de defensa 20%", price: 1500 },
+
+        { category: "Potenciadores", name: "Aumento de EXP", price: 600 },
+        { category: "Potenciadores", name: "Aumento de oro", price: 900 },
+
+        { category: "Recursos", name: "Comida x1M", price: 60 },
+        { category: "Recursos", name: "Piedra x1M", price: 60 },
+
+        { category: "Cofres", name: "Cofre raro", price: 1500 },
+
+        {
+          category: "Edificios",
+          name: "Acelerador de construcción 24H",
+          price: 1200,
+        },
+
+        {
+          category: "Familiares",
+          name: "Huevo raro de familiar",
+          price: 1000,
+        },
+
+        {
+          category: "Caza de Monstruos",
+          name: "Boleto de cacería",
+          price: 1200,
+        },
+      ];
+
+      const categories = [...new Set(items.map((i) => i.category))];
+
+      const tabsEl = document.getElementById("tabs");
+      const itemsEl = document.getElementById("items");
+      const listaCarritoEl = document.getElementById("lista-carrito");
+      const totalGemasEl = document.getElementById("total-gemas");
+      const btnEnviar1 = document.getElementById("btnEnviar1");
+      const btnEnviar2 = document.getElementById("btnEnviar2");
+
+      /* Tabs */
+      categories.forEach((cat, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "tab-btn" + (idx === 0 ? " active" : "");
+        btn.textContent = cat;
+        btn.addEventListener("click", () => {
+          document
+            .querySelectorAll(".tab-btn")
+            .forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          renderCategory(cat);
+        });
+        tabsEl.appendChild(btn);
+      });
+
+      function idSafe(s) {
+        return s.replace(/[^a-z0-9]/gi, "");
+      }
+
+      function renderCategory(cat) {
+        itemsEl.innerHTML = "";
+        items
+          .filter((it) => it.category === cat)
+          .forEach((it) => {
+            const div = document.createElement("div");
+            div.className = "item-card";
+            const inputId = "qty-" + idSafe(it.name);
+
+            div.innerHTML = `
+              <h4>${it.name}</h4>
+              <p>${it.price} gemas</p>
+              <input type="number" min="1" value="1" id="${inputId}" class="cantidad">
+              <button class="add-btn" data-name="${it.name}" data-price="${it.price}">Agregar</button>
+            `;
+
+            itemsEl.appendChild(div);
+          });
+      }
+
+      renderCategory(categories[0]);
+
+      let carrito = [];
+
+      itemsEl.addEventListener("click", (e) => {
+        if (e.target.matches(".add-btn")) {
+          const name = e.target.dataset.name;
+          const price = parseInt(e.target.dataset.price);
+          const qty = parseInt(
+            document.getElementById("qty-" + idSafe(name)).value
+          );
+
+          if (qty > 0) {
+            const exist = carrito.find((x) => x.name === name);
+            if (exist) exist.qty += qty;
+            else carrito.push({ name, price, qty });
+
+            renderCarrito();
+          }
+        }
+      });
+
+      function renderCarrito() {
+        listaCarritoEl.innerHTML = "";
+        let total = 0;
+
+        carrito.forEach((it) => {
+          total += it.qty * it.price;
+          const li = document.createElement("li");
+          li.textContent = `${it.name} x${it.qty} = ${it.qty * it.price} gemas`;
+          listaCarritoEl.appendChild(li);
+        });
+
+        totalGemasEl.textContent = total;
+      }
+
+      /* ==== NUEVA FUNCIÓN PARA ENVIAR DEPENDIENDO DEL BOTÓN ==== */
+      function enviarWhatsApp(destinoIndex) {
+        const poder = document.getElementById("poder").value.trim();
+        if (!/^[0-9]+$/.test(poder)) {
+          alert("Introduce el poder en millones.");
+          return;
+        }
+
+        if (carrito.length === 0) {
+          alert("El carrito está vacío.");
+          return;
+        }
+
+        let msg = `Pedido desde Mawi's Store:\n\n`;
+        let total = 0;
+
+        carrito.forEach((it) => {
+          msg += `- ${it.name} x${it.qty} = ${it.qty * it.price} gemas\n`;
+          total += it.qty * it.price;
+        });
+
+        msg += `\nTotal gemas: ${total}`;
+        msg += `\nPoder en millones: ${poder}`;
+
+        const extra = document.getElementById("mensaje-extra").value.trim();
+        if (extra) msg += `\nNota: ${extra}`;
+
+        const number = sellerNumbers[destinoIndex];
+        window.open(
+          `https://wa.me/${number}?text=${encodeURIComponent(msg)}`,
+          "_blank"
+        );
+      }
+
+      /* Botón 1 y Botón 2 */
+      btnEnviar1.addEventListener("click", () => enviarWhatsApp(0));
+      btnEnviar2.addEventListener("click", () => enviarWhatsApp(1));
+
+      /* Menú */
+      const menuToggle = document.getElementById("menuToggle");
+      const menuContent = document.getElementById("menuContent");
+
+      menuToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        menuContent.classList.toggle("show");
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!menuContent.contains(e.target) && e.target !== menuToggle) {
+          menuContent.classList.remove("show");
+        }
+      });
+    </script>
+  </body>
+</html>
